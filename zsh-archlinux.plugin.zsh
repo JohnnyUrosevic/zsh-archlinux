@@ -7,46 +7,46 @@
 function pac() {
     case $1 in
     add)
-    sudo pacman -S ${@:2}
+    paru -S ${@:2}
     ;;
     remove)
-    sudo pacman -Rs ${@:2}
+    paru -Rs ${@:2}
     ;;
     upg)
-    sudo pacman -Syu
+    paru -Syu
     ;;
     upgrade)
-    sudo pacman -Syu
+    paru -Syu
     ;;
     list)
     if command -v fzf > /dev/null; then
-    pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'
+    paru -Qq | fzf --preview 'paru -Qil {}' --layout=reverse --bind 'enter:execute(paru -Qil {} | less)'
     else
-    pacman -Qq | less
+    paru -Qq | less
     fi
     ;;
     search)
     if [[ "$#" == 2 ]]; then
     if command -v fzf > /dev/null; then
-    pacman -Slq | grep $2 | fzf --preview 'pacman -Si {}' --layout=reverse --bind 'enter:execute(pacman -Si {} | less)'
+    paru -Slq | grep $2 | fzf --preview 'paru -Si {}' --layout=reverse --bind 'enter:execute(paru -Si {} | less)'
     else
-    pacman -Slq | grep $2 | xargs pacman -Si | less
+    paru -Slq | grep $2 | xargs paru -Si | less
     fi
     else
     if command -v fzf > /dev/null; then
-    pacman -Slq | fzf --preview 'pacman -Si {}' --layout=reverse --bind 'enter:execute(pacman -Si {} | less)'
+    paru -Slq | fzf --preview 'paru -Si {}' --layout=reverse --bind 'enter:execute(paru -Si {} | less)'
     else
-    pacman -Slq | xargs pacman -Si | less
+    paru -Slq | xargs paru -Si | less
     fi
     fi
     ;;
     prune)
-    if pacman -Qtdq > /dev/null; then
-    sudo pacman -Rns $(pacman -Qtdq)
+    if paru -Qtdq > /dev/null; then
+    paru -Rns $(paru -Qtdq)
     fi
     ;;
     own)
-    pacman -Qo ${@:2}
+    paru -Qo ${@:2}
     ;;
     tree)
     if command -v pactree > /dev/null; then
